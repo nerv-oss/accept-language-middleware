@@ -1,12 +1,12 @@
 <?php
 
-namespace Orkhanahmadov\LaravelAcceptLanguageMiddleware;
+namespace Nerv\AcceptLanguageMiddleware;
 
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
-class Middleware
+class AcceptLanguageMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,14 +17,37 @@ class Middleware
      */
     public function handle($request, Closure $next)
     {
-        if ($locale = $this->parseHttpLocale($request)) {
+        $locale = $this->getPreferredAvilableLocale($request);
+
+        if ($locale) {
             app()->setLocale($locale);
+        } else {
+            app()->setLocale(config('app.fallback_locale'));
         }
 
         return $next($request);
     }
 
-    private function parseHttpLocale(Request $request): string
+    /**
+     *
+     *
+     * @param Request $request
+     * @return string|null
+     */
+    private function getPreferredAvilableLocale($request): string | null {
+        $availableLocales = config('accept-language-middleware.available_locales');
+        $preferredLocales = $this->parseHttpLocales($request);
+
+        foreach ($preferredLocales as $preferredLocale) {
+            if (in_array($preferredLocale, $availableLocales)) {
+                return $preferredLocale;
+            }
+        }
+
+        return null;
+    }
+
+    private function parseHttpLocales(Request $request): array
     {
         $list = explode(',', $request->server('HTTP_ACCEPT_LANGUAGE', ''));
 
@@ -48,6 +71,6 @@ class Middleware
                 return $locale['factor'];
             });
 
-        return $locales->first()['locale'];
+        return $locales->pluck('locale')->all();
     }
 }

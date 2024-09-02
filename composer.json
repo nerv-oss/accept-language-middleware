@@ -1,22 +1,35 @@
 {
-    "name": "orkhanahmadov/laravel-accept-language-middleware",
-    "description": "Laravel middleware for setting application locale based on HTTP Accept-Language header",
+    "name": "nerv/accept-language-middleware",
+    "description": "Laravel middleware, using the Accept-Language header for locale detection",
     "keywords": [
-        "orkhanahmadov",
         "accept-language",
+        "locales",
+        "localization",
         "laravel",
         "laravel middleware"
     ],
-    "homepage": "https://github.com/orkhanahmadov/laravel-accept-language-middleware",
+    "homepage": "https://github.com/nervde/accept-language-middleware",
     "license": "MIT",
     "type": "library",
     "authors": [
+        {
+            "name": "Julius Dockwarder",
+            "email": "julius.dockwarder@nerv.de",
+            "role": "Developer"
+        },
         {
             "name": "Orkhan Ahmadov",
             "email": "ahmadov90@gmail.com",
             "role": "Developer"
         }
     ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Nerv\\AcceptLanguageMiddleware\\AcceptLanguageMiddlewareProvider"
+            ]
+        }
+    },
     "require": {
         "php": "^8.0.2",
         "illuminate/contracts": "^8.0|^9.0|^10.0|^11.0",
@@ -29,12 +42,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Orkhanahmadov\\LaravelAcceptLanguageMiddleware\\": "src"
+            "Nerv\\AcceptLanguageMiddleware\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Orkhanahmadov\\LaravelAcceptLanguageMiddleware\\Tests\\": "tests"
+            "Nerv\\AcceptLanguageMiddleware\\Tests\\": "tests"
         }
     },
     "scripts": {

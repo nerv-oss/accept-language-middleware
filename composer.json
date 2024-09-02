@@ -1,5 +1,5 @@
 {
-    "name": "nerv/accept-language-middleware",
+    "name": "nerv-oss/accept-language-middleware",
     "description": "Laravel middleware, using the Accept-Language header for locale detection",
     "keywords": [
         "accept-language",

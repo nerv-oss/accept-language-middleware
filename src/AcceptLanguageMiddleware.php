@@ -18,8 +18,11 @@ class AcceptLanguageMiddleware
     public function handle($request, Closure $next)
     {
         $locale = $this->getPreferredAvilableLocale($request);
+        $sessionLocale = $request->session()->get(config('accept-language-middleware.session_property'));
 
-        if ($locale) {
+        if ($sessionLocale) {
+            app()->setLocale($sessionLocale);
+        } else if ($locale) {
             app()->setLocale($locale);
         } else {
             app()->setLocale(config('app.fallback_locale'));
